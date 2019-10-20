@@ -2,7 +2,7 @@
 
 I3_SCRIPTS_FOLDER=$HOME/dev/i3-scripts
 lock() {
-    # $HOME/dev/i3-scripts/lockandblur.sh
+    # $I3_SCRIPTS_FOLDER/lockandblur.sh
     i3lock -i $($I3_SCRIPTS_FOLDER/random-wallpaper/target/release/random-wallpaper)
 }
 
@@ -14,13 +14,13 @@ case "$1" in
         i3-msg exit
         ;;
     suspend)
-        lock && systemctl suspend
+        lock && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
         ;;
     hibernate)
-        lock && systemctl hibernate
+        lock && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Hibernate" boolean:true
         ;;
     reboot)
-        systemctl reboot
+        dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Reboot" boolean:true
         ;;
     shutdown)
         systemctl poweroff
