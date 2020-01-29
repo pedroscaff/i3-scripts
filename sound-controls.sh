@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SINK=$(pactl list sinks | grep Name | awk "{print \$2}")
+SINK=$(pactl list sink-inputs | grep Sink: | awk "{print \$2}")
 
 invert_mute() {
   ISMUTE=$(pactl list sinks | grep Mute | awk "{print \$2}")
